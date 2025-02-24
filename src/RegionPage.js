@@ -8,23 +8,20 @@ function RegionPage() {
   const navigate = useNavigate();
   const [countries, setCountries] = useState([]);
 
-  // ✅ Define fetchData()
   const fetchData = () => {
     axios.get(`http://localhost:8080/api/regions/${id}/countries`)
       .then(response => setCountries(response.data));
   };
 
   useEffect(() => {
-    fetchData();  // ✅ Use fetchData here
+    fetchData();
   }, [id]);
 
   return (
     <div>
       <button onClick={() => navigate(-1)}>Back</button>
       
-      <h2>Countries</h2>
-      <CountryCRUD countries={countries} refreshCountries={fetchData} />
-      
+      <h2>Countries in the Region</h2>   
       <ul>
         {countries.map(country => (
           <li key={country.id}>
@@ -32,6 +29,8 @@ function RegionPage() {
           </li>
         ))}
       </ul>
+
+      <CountryCRUD countries={countries} refreshCountries={fetchData} />
     </div>
   );
 }
